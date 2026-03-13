@@ -529,11 +529,11 @@ function renderDoubanCards(data, container) {
                 .replace(/>/g, '&gt;');
             
             // 处理图片URL
-            // 1. 直接使用豆瓣图片URL (添加no-referrer属性)
-            const originalCoverUrl = item.cover;
-            
-            // 2. 也准备代理URL作为备选
-            const proxiedCoverUrl = PROXY_URL + encodeURIComponent(originalCoverUrl);
+            // ⭐ 修改1：强制 https，避免 http 图片被浏览器拦截
+            const originalCoverUrl = item.cover.replace("http://", "https://");
+
+            // ⭐ 修改2：代理URL不要使用 encodeURIComponent
+            const proxiedCoverUrl = PROXY_URL + originalCoverUrl;
             
             // 为不同设备优化卡片布局
             card.innerHTML = `
